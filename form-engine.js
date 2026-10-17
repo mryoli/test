@@ -31,6 +31,33 @@
     var answers = saved.answers || {};
     var codeVal = urlCode || saved.code || "";
 
+    // ── garde-fou : le post-test exige que le pré-test soit fait ────────────
+    // Actif seulement si spec.requirePretest, un code en URL et une Web App branchée.
+    if (spec.requirePretest && urlCode && CFG.WEBAPP_URL) {
+      mount.innerHTML = '<div class="done"><p style="margin:14px 0">Vérification de votre accès…</p></div>';
+      fetch(CFG.WEBAPP_URL + (CFG.WEBAPP_URL.indexOf("?") === -1 ? "?" : "&") + "check=pretest&code=" + encodeURIComponent(urlCode))
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          mount.innerHTML = "";
+          if (res && res.pretest === false) return blockGate(mount, urlCode);
+          build();
+        })
+        .catch(function () { mount.innerHTML = ""; build(); }); // en cas d'échec réseau, on n'empêche pas de répondre
+      return;
+    }
+    build();
+
+    function blockGate(mount, code) {
+      var d = el("div", { class: "done" });
+      d.innerHTML =
+        '<div class="check" style="background:#FBE9E3"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#B4441F" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5"></path><path d="M12 16h.01"></path></svg></div>' +
+        '<h2>Commencez par le pré-test</h2>' +
+        '<div class="code-echo">' + escapeHtml(code) + '</div>' +
+        '<p>Nous n\'avons pas encore votre formulaire pré-test pour ce code. Le questionnaire final s\'ouvrira une fois votre pré-test enregistré. Utilisez d\'abord le lien de pré-test qui vous a été envoyé.</p>';
+      mount.appendChild(d);
+    }
+
+    function build() {
     var form = el("form");
     form.setAttribute("novalidate", "novalidate");
 
@@ -282,8 +309,9 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function escapeHtml(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
-
     updateProgress();
+    } // end build()
+
+    function escapeHtml(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   };
 })();
