@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yolicards — Formulaire pré-test</title>
+<meta name="description" content="Formulaire pré-test du protocole de test Yolicards : à remplir avant d'accéder à l'application.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jost:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="brand"><span class="dot"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1816" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path></svg></span>Yolicards · Test</div>
+    <h1>Formulaire pré-test</h1>
+    <p>À remplir <strong>avant</strong> d'installer l'application. Pas de bonne ni de mauvaise réponse : soyez honnête et concret. Durée : environ 8 minutes.</p>
+    <span class="pill">Document 1 / 3 — Protocole de test</span>
+  </header>
+
+  <div id="app"></div>
+
+  <p class="footnote">Vos réponses restent confidentielles et ne servent qu'à améliorer le produit.<br>© Yolicards — Yolibrand, Abidjan.</p>
+</div>
+
+<script src="config.js"></script>
+<script src="form-engine.js"></script>
+<script>
+const PRETEST = {
+  id: "pretest",
+  version: "1.0",
+  title: "Formulaire pré-test",
+  askEmail: true,
+  codeLabel: "Votre code testeur",
+  codeHint: "Fourni par l'équipe Yolicards — ex : COWORKA-JD. Notez-le : il vous sera redemandé après le test (c'est ce qui relie vos deux formulaires).",
+  sections: [
+    { title: "Vous et votre groupe", questions: [
+      { n:2, type:"text", required:true, label:"Nom de votre groupe / grappe de test" },
+      { n:3, type:"single", required:true, label:"Votre secteur d'activité",
+        options:["Entrepreneuriat / startup","Conseil / freelance","Commerce / vente","Finance / banque / assurance","Tech / IT","Communication / marketing","Étudiant / jeune diplômé","Autre (précisez)"], other:true },
+      { n:4, type:"single", required:true, label:"Depuis combien de temps exercez-vous une activité professionnelle ?",
+        options:["Moins de 2 ans","2 à 5 ans","5 à 10 ans","Plus de 10 ans"] },
+      { n:5, type:"single", required:true, label:"À quelle fréquence rencontrez-vous de nouveaux contacts professionnels ?",
+        options:["Tous les jours","Plusieurs fois par semaine","Quelques fois par mois","Rarement"] },
+      { n:6, type:"single", required:true, label:"En moyenne, combien de nouveaux contacts pro échangez-vous lors d'un événement (salon, conférence, afterwork) ?",
+        options:["Moins de 5","5 à 15","15 à 30","Plus de 30","Je ne vais pas à ce type d'événement"] },
+    ]},
+    { title: "La carte de visite papier", questions: [
+      { n:7, type:"single", required:true, label:"Utilisez-vous actuellement des cartes de visite en papier ?",
+        options:["Oui, régulièrement","Oui, mais rarement","Non, plus maintenant","Non, jamais"] },
+      { n:8, type:"multi", label:"Quels AVANTAGES trouvez-vous à la carte papier ? (plusieurs choix possibles)",
+        options:["Simple et rapide à donner","Pas besoin de téléphone ni d'application","Objet tangible, professionnel","Tout le monde comprend comment ça marche","Je ne lui trouve aucun avantage","Autre (précisez)"], other:true },
+      { n:9, type:"multi", label:"Quels INCONVÉNIENTS avez-vous vécus avec la carte papier ? (plusieurs choix possibles)",
+        options:["J'en ai manqué au mauvais moment","Je les perds ou je les oublie","Elles se périment (changement de poste, numéro)","Coût d'impression / réimpression","Je perds les cartes qu'on me donne","Je ne retrouve jamais un contact dans la pile","Autre (précisez)"], other:true },
+      { n:10, type:"long", label:"Racontez une situation concrète où la carte papier vous a fait défaut (contact perdu, carte oubliée…)." },
+      { n:11, type:"scale", min:1, max:5, label:"À quel point la gestion de vos cartes papier vous frustre-t-elle ?", endLow:"Aucune frustration", endHigh:"Énorme frustration" },
+    ]},
+    { title: "La carte NFC / QR physique", questions: [
+      { n:12, type:"single", required:true, label:"Connaissez-vous les cartes de visite NFC ou à QR code (cartes physiques qu'on approche ou scanne avec un téléphone) ?",
+        options:["Oui, j'en utilise une","Oui, j'en ai déjà vu / reçu","J'en ai entendu parler mais jamais vu","Non, je ne connais pas"] },
+      { n:13, type:"multi", label:"Si vous en avez déjà utilisé ou vu une : quels AVANTAGES lui trouvez-vous ?",
+        options:["Plus moderne que le papier","Pas besoin de réimprimer à chaque changement","Écologique (pas de papier)","Effet « waouh » auprès des contacts","Je n'en ai jamais utilisé","Autre (précisez)"], other:true },
+      { n:14, type:"multi", label:"Quels INCONVÉNIENTS ou difficultés avez-vous rencontrés avec une carte NFC/QR physique ?",
+        options:["Le téléphone de l'autre n'était pas compatible / NFC désactivé","Il a fallu expliquer comment ça marche","Le tap ne marchait pas du premier coup","L'échange était à sens unique (je n'ai rien reçu en retour)","Pas de réseau pour ouvrir le lien","Il faut toujours l'avoir sur soi","Je n'en ai jamais utilisé","Autre (précisez)"], other:true },
+      { n:15, type:"long", label:"Selon vous, la carte NFC/QR physique règle-t-elle vraiment les problèmes de la carte papier ? Expliquez." },
+    ]},
+    { title: "Les alternatives que vous utilisez déjà", questions: [
+      { n:16, type:"multi", label:"Aujourd'hui, comment partagez-vous le plus souvent vos coordonnées pro ? (plusieurs choix)",
+        options:["Carte papier","Carte NFC/QR physique","Je dicte / j'écris mon numéro","WhatsApp (contact ou lien)","LinkedIn","Je note dans le téléphone de l'autre","Application dédiée (précisez laquelle)","Autre (précisez)"], other:true },
+      { n:17, type:"long", label:"Avez-vous déjà essayé une application de carte de visite numérique ? Si oui, laquelle et qu'en avez-vous pensé ?" },
+      { n:18, type:"long", label:"Pour chaque solution que vous utilisez, quel est son principal DÉFAUT à vos yeux ? (ex : WhatsApp = tout est mélangé, LinkedIn = trop formel…)" },
+    ]},
+    { title: "Vos attentes envers une innovation", lead:"Ces questions sont les plus importantes. Répondez avant d'avoir vu notre application : on veut vos attentes brutes, pas votre avis sur notre produit.", questions: [
+      { n:19, type:"long", required:true, label:"Si une nouvelle solution arrivait pour remplacer la carte de visite, quelles seraient vos 3 attentes prioritaires ?" },
+      { n:20, type:"long", label:"Qu'est-ce qui vous ferait dire « ça, c'est vraiment utile » au point de l'adopter tout de suite ?" },
+      { n:21, type:"long", label:"À l'inverse, qu'est-ce qui vous ferait abandonner une telle solution dès le premier jour ?" },
+      { n:22, type:"multi", max:3, label:"Parmi ces promesses, lesquelles vous sembleraient les plus précieuses ? (max 3)",
+        options:["Ne plus jamais perdre un contact","Avoir plusieurs cartes selon mes activités","Voir les pros autour de moi en événement","Retrouver qui j'ai rencontré, où et quand","Prouver que je suis un pro sérieux et vérifié","Transformer une carte papier reçue en contact numérique","Être suggéré aux bonnes personnes automatiquement"] },
+      { n:23, type:"single", label:"Seriez-vous prêt(e) à payer pour une solution qui répond à vos attentes ?",
+        options:["Oui, sans hésiter si elle est vraiment utile","Oui, mais seulement un petit montant","Peut-être, il faudrait que je teste d'abord","Non, je ne paierais pas pour ça"] },
+      { n:24, type:"long", label:"Un dernier mot : qu'est-ce qui vous a donné envie de participer à ce test ?" },
+    ]},
+  ],
+  doneTitle: "Merci, c'est enregistré !",
+  doneText: "Vous allez maintenant recevoir votre accès à l'application et votre fiche de mission pour les 14 jours de test. Gardez bien votre code testeur."
+};
+renderForm(PRETEST, document.getElementById("app"));
+</script>
+</body>
+</html>
