@@ -244,10 +244,19 @@
     var partenaires = COLLECT.map(function(t,i){ var c=state.collect["c"+i]||{}; return (c.statut==="declaree"||c.statut==="echec")?c.partenaire:""; })
                              .filter(function(x){return x;}).join(", ");
 
+    // structure par mission (M1..M3) pour le croisement même-mission côté serveur
+    var collectStruct = COLLECT.map(function(t,i){
+      var c=state.collect["c"+i]||{};
+      if(!c.statut || c.statut==="non_commencee") return null;
+      var parts = (c.partenaire||"").split(",").map(function(s){return s.trim().toUpperCase();}).filter(function(s){return s;});
+      return { id:"M"+(i+1), statut:c.statut, partenaires:parts };
+    }).filter(function(x){return x;});
+
     var payload = { form:"suivi", code:code, data:{
       missions_indiv: indivFaites.join(" | "),
       missions_collectives: collectLignes.join("  ||  "),
       codes_partenaires: partenaires,
+      collect_struct: collectStruct,
       journal: ["J3: "+state.j3,"J7: "+state.j7,"J12: "+state.j12].filter(function(x){return x.length>4;}).join("  ||  "),
       difficultes: state.diff
     }};
