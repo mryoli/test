@@ -26,6 +26,7 @@
   window.renderForm = function (spec, mount) {
     var CFG = window.YOLI_CONFIG || {};
     var urlCode = (qs("code") || "").trim().toUpperCase();
+    var urlEmail = (qs("email") || "").trim();
     var draftKey = "yoli_" + spec.id + "_" + (urlCode || "anon");
     var saved = load(draftKey) || {};
     var answers = saved.answers || {};
@@ -83,10 +84,12 @@
       eb.style.marginTop = "-8px";
       eb.innerHTML =
         '<label for="emailin">Votre e-mail <span style="color:#fff;opacity:.7">(pour recevoir le questionnaire final à J+' + (CFG.DUREE_JOURS || 14) + ')</span></label>' +
-        '<input id="emailin" type="email" autocomplete="email" placeholder="prenom@exemple.com" value="' + escapeHtml(saved.email || "") + '">' +
+        '<input id="emailin" type="email" autocomplete="email" placeholder="prenom@exemple.com" value="' + escapeHtml(urlEmail || saved.email || "") + '">' +
         '<p class="hint">Utilisé uniquement pour vous envoyer le lien du questionnaire final, au bon moment.</p>';
       form.appendChild(eb);
       emailInput = eb.querySelector("#emailin");
+      // pré-rempli par le lien ?email= : on verrouille comme le code
+      if (urlEmail) { emailInput.value = urlEmail; emailInput.setAttribute("readonly", "readonly"); emailInput.style.opacity = ".85"; }
     }
 
     var allQ = [];

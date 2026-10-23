@@ -32,6 +32,7 @@ const POSTTEST = {
   id: "posttest",
   version: "1.0",
   title: "Questionnaire final",
+  requirePretest: true,
   codeLabel: "Votre code testeur (le même qu'au pré-test)",
   codeHint: "Indiquez le MÊME code qu'au formulaire pré-test. C'est ce qui nous permet de comparer vos attentes de départ avec votre expérience réelle.",
   sections: [
@@ -39,11 +40,12 @@ const POSTTEST = {
       lead:"On vérifie d'abord votre usage réel : vos réponses n'ont de sens qu'à la lumière de ce que vous avez vraiment testé.", questions: [
       { n:3, type:"single", required:true, label:"Sur les 14 jours, à quelle fréquence avez-vous ouvert l'application ?",
         options:["Tous les jours","Plusieurs fois par semaine","Quelques fois en tout","Une ou deux fois seulement"] },
-      { n:4, type:"multi", label:"Quelles missions SOLO avez-vous accomplies ? (cochez ce que vous avez fait)",
+      { n:4, type:"multi", label:"Quelles missions INDIVIDUELLES avez-vous accomplies ? (cochez ce que vous avez fait)",
         options:["Créé et personnalisé mon profil","Créé un 2e profil","Scanné des cartes papier (YoliScan)","Partagé ma carte par QR","Organisé mon répertoire","Consulté ma certification"] },
-      { n:5, type:"single", required:true, label:"Avez-vous réalisé la mission de GROUPE (retrouver d'autres testeurs et échanger via YoliZone) ?",
-        options:["Oui, avec 2 personnes ou plus","Oui, avec 1 personne","Non, je n'ai pas pu organiser la rencontre","Non, j'ai oublié / pas eu le temps"] },
-      { n:6, type:"long", label:"Si vous avez testé YoliZone en groupe : ça a fonctionné comment ?" },
+      { n:5, type:"single", required:true, label:"Les missions COLLECTIVES (avec un autre testeur : YoliZone, connexion, échange de cartes), où en êtes-vous ?",
+        options:["Je les ai toutes réalisées","J'en ai réalisé une partie","Je les ai tentées mais ça n'a pas fonctionné","Je n'ai pas pu les réaliser"] },
+      { n:6, type:"single", required:true, label:"Si vous n'avez pas pu réaliser une mission collective, pour quelle raison principale ? (sinon : « sans objet »)",
+        options:["Aucun partenaire disponible","Le partenaire n'était pas disponible à temps","Problème technique dans l'application","Je n'ai pas bien compris la mission","Manque de temps","Autre raison","Sans objet — je les ai réalisées"] },
     ]},
     { title: "Votre expérience", questions: [
       { n:7, type:"scale", min:1, max:5, required:true, label:"Globalement, quelle est votre satisfaction ?", endLow:"Très déçu", endHigh:"Enthousiaste" },

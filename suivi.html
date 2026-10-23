@@ -4,18 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yolicards — Ma fiche de mission (14 jours)</title>
-<meta name="description" content="Checklist persistante du test Yolicards sur 14 jours : missions solo, groupe, projection et journal de bord.">
+<meta name="description" content="Checklist persistante du test Yolicards sur 14 jours : missions individuelles et collectives, journal de bord.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jost:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* missions collectives */
+.mcol{border:1.5px solid var(--line);border-radius:16px;padding:14px;margin:10px 0}
+.mcol .m-title{font-weight:600;font-size:14.5px;line-height:1.4;margin-bottom:10px;display:flex;gap:9px}
+.mcol .m-title .m-tag{font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#244C84;background:#EAF1FB;border-radius:6px;padding:2px 7px;flex-shrink:0;height:fit-content;margin-top:1px}
+.mcol select{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:11px 12px;font-family:inherit;font-size:14px;background:#fff;color:var(--ink)}
+.mcol select:focus{outline:none;border-color:var(--gold)}
+.mcol .partner{margin-top:10px;display:none}
+.mcol .partner.show{display:block}
+.mcol .partner label{font-size:12.5px;color:var(--muted);display:block;margin-bottom:5px}
+.mcol .partner input{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;font-family:inherit;font-size:14px;text-transform:uppercase;letter-spacing:.04em}
+.mcol.ok{border-color:#Bfe0CC;background:#F6FAF7}
+.mcol.ko{border-color:#E6C4B8;background:#FBF4F1}
+</style>
 </head>
 <body>
 <div class="wrap">
   <header class="masthead">
     <div class="brand"><span class="dot"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1816" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path></svg></span>Yolicards · Test</div>
     <h1>Ma fiche de mission</h1>
-    <p>Votre parcours sur 14 jours. Cochez vos missions au fur et à mesure — <strong>votre progression reste enregistrée</strong> sur cet appareil, et chaque enregistrement nous remonte votre avancement.</p>
+    <p>Votre parcours sur 14 jours. Deux volets, obligatoires pour tous : des missions <strong>individuelles</strong> et des missions <strong>collectives</strong> (à faire avec au moins un autre testeur Yolicards). Votre progression reste enregistrée sur cet appareil.</p>
     <span class="pill">Document 2 / 3 — Protocole de test</span>
   </header>
 
@@ -27,32 +41,21 @@
     <p class="hint">Le même qu'au formulaire pré-test. Il relie votre avancement à votre dossier.</p>
   </div>
 
-  <div class="callout" style="margin-bottom:16px">Pendant cette phase, seuls les testeurs comme vous ont l'application. Certaines fonctions (voir les pros autour de vous) ne révèlent leur pleine puissance qu'avec des milliers d'utilisateurs : c'est pourquoi votre groupe teste <strong>ensemble</strong>, et qu'on vous demande aussi d'en <strong>imaginer</strong> certaines à grande échelle.</div>
-
   <section class="section">
-    <h2><span class="idx">1</span>Missions solo — dès les premiers jours</h2>
-    <p class="lead">Elles fonctionnent sans personne d'autre. À accomplir dans les 5 premiers jours.</p>
-    <div data-group="solo"></div>
+    <h2><span class="idx">1</span>Missions individuelles — dès les premiers jours</h2>
+    <p class="lead">À faire seul, dans les 5 premiers jours. Elles ne dépendent de personne d'autre.</p>
+    <div data-group="indiv"></div>
   </section>
 
   <section class="section">
-    <h2><span class="idx">2</span>Mission de groupe — une fois dans les 14 jours</h2>
-    <p class="lead">La mission clé pour tester l'échange entre utilisateurs. Retrouvez-vous physiquement avec au moins 1 ou 2 autres testeurs de votre groupe.</p>
-    <div data-group="groupe"></div>
-    <div class="grp-fields">
-      <div><label for="dr">Date de la rencontre</label><input id="dr" type="date"></div>
-      <div><label for="nb">Nombre de testeurs présents</label><input id="nb" type="number" min="1" placeholder="ex : 3"></div>
-    </div>
+    <h2><span class="idx">2</span>Missions collectives — avec un autre testeur</h2>
+    <p class="lead">À réaliser avec <strong>au moins un autre testeur Yolicards</strong> — une personne de votre entourage déjà testeuse, ou quelqu'un que vous invitez. Pour chaque mission, indiquez où vous en êtes et, si elle est faite, le <strong>code du testeur partenaire</strong>.</p>
+    <div class="callout" style="margin:8px 0 4px">Une mission n'est comptée réalisée que si vous le déclarez et renseignez le code du partenaire — pas simplement en invitant quelqu'un. Votre partenaire la déclarera aussi de son côté : c'est ce qui permet de confirmer l'interaction.</div>
+    <div data-group="collect"></div>
   </section>
 
   <section class="section">
-    <h2><span class="idx">3</span>Missions de projection — à imaginer</h2>
-    <p class="lead">Certaines fonctions n'ont de sens qu'avec beaucoup d'utilisateurs. On ne vous demande pas de les juger, mais d'imaginer.</p>
-    <div data-group="projection"></div>
-  </section>
-
-  <section class="section">
-    <h2><span class="idx">4</span>Journal de bord</h2>
+    <h2><span class="idx">3</span>Journal de bord</h2>
     <p class="lead">Prenez 2 minutes à ces 3 moments pour noter à chaud. Ces notes vous aideront à remplir le questionnaire final.</p>
     <div class="q"><div class="qh"><span class="qn">J3.</span><span>Première impression : ce qui vous a plu, ce qui vous a bloqué.</span></div><textarea data-journal="j3"></textarea></div>
     <div class="q"><div class="qh"><span class="qn">J7.</span><span>À mi-parcours : utilisez-vous l'app spontanément ? Pour quoi faire ? Qu'est-ce qui manque ?</span></div><textarea data-journal="j7"></textarea></div>
@@ -60,7 +63,7 @@
   </section>
 
   <section class="section">
-    <h2><span class="idx">5</span>Difficultés rencontrées</h2>
+    <h2><span class="idx">4</span>Difficultés rencontrées</h2>
     <p class="lead">Un bug, un blocage, une incompréhension ? Notez tout ici, même petit.</p>
     <textarea data-difficultes placeholder="Décrivez les difficultés, bugs ou points de blocage…"></textarea>
   </section>
@@ -78,107 +81,152 @@
 <script>
 (function(){
   "use strict";
-  var MISSIONS = {
-    solo: [
-      "Créer votre profil et le personnaliser (photo, infos, apparence)",
-      "Si votre plan le permet : créer un 2e profil pour une autre activité",
-      "Scanner 3 cartes de visite papier avec YoliScan",
-      "Partager votre carte par QR code à 3 personnes — même sans l'application (elles la reçoivent via leur navigateur)",
-      "Organiser et explorer votre répertoire de contacts",
-      "Consulter votre badge de certification et la navigation générale"
-    ],
-    groupe: [
-      "Vous retrouver à au moins 2 testeurs, au même endroit",
-      "Activer YoliZone et vous détecter mutuellement",
-      "Échanger vos cartes en direct via l'application"
-    ],
-    projection: [
-      "Imaginer YoliZone dans un salon de 300 professionnels : noter ce que vous en attendriez",
-      "Imaginer YoliMatch vous suggérant les 5 personnes les plus utiles dans un événement : qu'en pensez-vous ?"
-    ]
-  };
-  var TAGS = { solo:"Solo", groupe:"Groupe", projection:"Projection" };
+
+  // Missions individuelles (cases à cocher)
+  var INDIV = [
+    "Créer votre profil et le personnaliser (photo, infos, apparence)",
+    "Si votre plan le permet : créer un 2e profil pour une autre activité",
+    "Scanner 3 cartes de visite papier avec YoliScan",
+    "Partager votre carte par QR code à 3 personnes — même sans l'application (elles la reçoivent via leur navigateur)",
+    "Organiser et explorer votre répertoire de contacts",
+    "Consulter votre badge de certification et la navigation générale"
+  ];
+
+  // Missions collectives (statut + code partenaire)
+  var COLLECT = [
+    "Détecter un autre testeur autour de vous via YoliZone",
+    "Envoyer / accepter une demande de connexion avec un autre testeur",
+    "Échanger vos cartes en direct et vérifier la réciprocité (chacun reçoit celle de l'autre)"
+  ];
+
+  // Statuts possibles d'une mission collective (machine à états côté analyse)
+  var STATUTS = [
+    ["", "— Où en êtes-vous ? —"],
+    ["non_commencee", "Pas encore commencée"],
+    ["declaree", "Réalisée"],
+    ["echec", "Tentée, mais ça n'a pas fonctionné"],
+    ["non_realisee", "Je n'ai pas pu la réaliser"]
+  ];
 
   function qs(n){ try{ return new URLSearchParams(location.search).get(n)||""; }catch(e){ return ""; } }
   function store(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){} }
   function load(k){ try{ return JSON.parse(localStorage.getItem(k)||"null"); }catch(e){ return null; } }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
 
   var urlCode = (qs("code")||"").trim().toUpperCase();
   var codeInput = document.getElementById("codein");
   codeInput.value = urlCode || "";
   if (urlCode){ codeInput.setAttribute("readonly","readonly"); codeInput.style.opacity=".85"; }
   var key = "yoli_suivi_" + (urlCode || "anon");
-  var state = load(key) || { tasks:{}, dr:"", nb:"", j3:"", j7:"", j12:"", diff:"" };
+  var state = load(key) || { indiv:{}, collect:{}, j3:"", j7:"", j12:"", diff:"" };
+  if(!state.indiv) state.indiv={};
+  if(!state.collect) state.collect={};
 
-  // build tasks
-  Object.keys(MISSIONS).forEach(function(g){
-    var mount = document.querySelector('[data-group="'+g+'"]');
-    MISSIONS[g].forEach(function(txt, i){
-      var id = g+"_"+i;
-      var lab = document.createElement("label");
-      lab.className = "task" + (state.tasks[id] ? " done" : "");
-      lab.innerHTML = '<input type="checkbox" '+(state.tasks[id]?"checked":"")+'>' +
-        '<span class="t-body"><span class="t-tag">'+TAGS[g]+'</span><br>'+txt+'</span>';
-      var cb = lab.querySelector("input");
-      cb.addEventListener("change", function(){
-        state.tasks[id] = cb.checked;
-        lab.classList.toggle("done", cb.checked);
-        persist();
-      });
-      mount.appendChild(lab);
-    });
+  // ── Missions individuelles ──────────────────────────────────────────────
+  var mountI = document.querySelector('[data-group="indiv"]');
+  INDIV.forEach(function(txt,i){
+    var id="i"+i;
+    var lab=document.createElement("label");
+    lab.className="task"+(state.indiv[id]?" done":"");
+    lab.innerHTML='<input type="checkbox" '+(state.indiv[id]?"checked":"")+'>'+
+      '<span class="t-body"><span class="t-tag">Individuel</span><br>'+esc(txt)+'</span>';
+    var cb=lab.querySelector("input");
+    cb.addEventListener("change",function(){ state.indiv[id]=cb.checked; lab.classList.toggle("done",cb.checked); persist(); });
+    mountI.appendChild(lab);
   });
 
-  // restore fields
-  var dr=document.getElementById("dr"), nb=document.getElementById("nb");
-  dr.value=state.dr||""; nb.value=state.nb||"";
+  // ── Missions collectives ────────────────────────────────────────────────
+  var mountC = document.querySelector('[data-group="collect"]');
+  COLLECT.forEach(function(txt,i){
+    var id="c"+i;
+    var cur = state.collect[id] || { statut:"", partenaire:"" };
+    var card=document.createElement("div");
+    card.className="mcol";
+    var opts=STATUTS.map(function(s){ return '<option value="'+s[0]+'"'+(cur.statut===s[0]?" selected":"")+'>'+esc(s[1])+'</option>'; }).join("");
+    card.innerHTML=
+      '<div class="m-title"><span class="m-tag">Collectif</span><span>'+esc(txt)+'</span></div>'+
+      '<select data-sel="'+id+'">'+opts+'</select>'+
+      '<div class="partner" data-partner="'+id+'">'+
+        '<label>Code(s) du/des testeur(s) avec qui vous l\'avez faite — séparés par une virgule</label>'+
+        '<input data-pcode="'+id+'" placeholder="TEST-014" value="'+esc(cur.partenaire)+'">'+
+      '</div>';
+    mountC.appendChild(card);
+    var sel=card.querySelector("select");
+    var partner=card.querySelector(".partner");
+    var pcode=card.querySelector("input");
+    function refresh(){
+      var v=sel.value;
+      var needP = (v==="declaree"||v==="echec");
+      partner.classList.toggle("show", needP);
+      card.classList.toggle("ok", v==="declaree");
+      card.classList.toggle("ko", v==="echec");
+    }
+    refresh();
+    sel.addEventListener("change",function(){ (state.collect[id]=state.collect[id]||{}).statut=sel.value; refresh(); persist(); });
+    pcode.addEventListener("input",function(){ (state.collect[id]=state.collect[id]||{}).partenaire=pcode.value.trim().toUpperCase(); persist(); });
+  });
+
+  // ── Journal + difficultés ───────────────────────────────────────────────
   document.querySelector('[data-journal="j3"]').value=state.j3||"";
   document.querySelector('[data-journal="j7"]').value=state.j7||"";
   document.querySelector('[data-journal="j12"]').value=state.j12||"";
   document.querySelector('[data-difficultes]').value=state.diff||"";
-
-  [dr,nb].forEach(function(el){ el.addEventListener("input",persist); });
   document.querySelectorAll('[data-journal],[data-difficultes]').forEach(function(el){ el.addEventListener("input",persist); });
 
   function collect(){
-    state.dr = dr.value; state.nb = nb.value;
-    state.j3 = document.querySelector('[data-journal="j3"]').value;
-    state.j7 = document.querySelector('[data-journal="j7"]').value;
-    state.j12 = document.querySelector('[data-journal="j12"]').value;
-    state.diff = document.querySelector('[data-difficultes]').value;
+    state.j3=document.querySelector('[data-journal="j3"]').value;
+    state.j7=document.querySelector('[data-journal="j7"]').value;
+    state.j12=document.querySelector('[data-journal="j12"]').value;
+    state.diff=document.querySelector('[data-difficultes]').value;
   }
   function persist(){ collect(); store(key,state); progress(); }
 
   function progress(){
-    var total=0, done=0;
-    Object.keys(MISSIONS).forEach(function(g){ total+=MISSIONS[g].length; });
-    for (var k in state.tasks) if(state.tasks[k]) done++;
-    var pct = total?Math.round(done/total*100):0;
+    var total=INDIV.length+COLLECT.length, done=0;
+    for(var k in state.indiv) if(state.indiv[k]) done++;
+    COLLECT.forEach(function(t,i){ var c=state.collect["c"+i]; if(c&&c.statut&&c.statut!=="non_commencee") done++; });
+    var pct=total?Math.round(done/total*100):0;
     document.getElementById("pbar").style.width=pct+"%";
     document.getElementById("ptxt").textContent=pct+" %";
     document.getElementById("pcnt").textContent=done+" / "+total+" missions";
   }
   progress();
 
-  // save -> Web App
+  // ── Enregistrement -> Web App ───────────────────────────────────────────
   document.getElementById("savebtn").addEventListener("click", function(){
     persist();
     var err=document.getElementById("err"); err.classList.remove("show");
     var code=codeInput.value.trim().toUpperCase();
     if(!code){ err.textContent="Merci d'indiquer votre code testeur."; err.classList.add("show"); return; }
-    var solo = MISSIONS.solo.filter(function(t,i){return state.tasks["solo_"+i];});
-    var grp  = MISSIONS.groupe.filter(function(t,i){return state.tasks["groupe_"+i];});
+
+    // missions individuelles faites
+    var indivFaites = INDIV.filter(function(t,i){ return state.indiv["i"+i]; });
+
+    // missions collectives : "intitulé = statut (partenaires)"
+    var collectLignes = COLLECT.map(function(t,i){
+      var c=state.collect["c"+i]||{};
+      if(!c.statut) return null;
+      var libelle = (STATUTS.filter(function(s){return s[0]===c.statut;})[0]||["",c.statut])[1];
+      var p = (c.statut==="declaree"||c.statut==="echec") && c.partenaire ? " [avec "+c.partenaire+"]" : "";
+      return t + " → " + libelle + p;
+    }).filter(function(x){return x;});
+
+    // partenaires déclarés (pour la confirmation croisée côté serveur)
+    var partenaires = COLLECT.map(function(t,i){ var c=state.collect["c"+i]||{}; return (c.statut==="declaree"||c.statut==="echec")?c.partenaire:""; })
+                             .filter(function(x){return x;}).join(", ");
+
     var payload = { form:"suivi", code:code, data:{
-      missions_solo: solo.join(" | "),
-      mission_groupe: grp.join(" | "),
-      date_rencontre: state.dr, nb_testeurs: state.nb,
-      journal: ["J3: "+state.j3, "J7: "+state.j7, "J12: "+state.j12].filter(function(x){return x.length>4;}).join("  ||  "),
+      missions_indiv: indivFaites.join(" | "),
+      missions_collectives: collectLignes.join("  ||  "),
+      codes_partenaires: partenaires,
+      journal: ["J3: "+state.j3,"J7: "+state.j7,"J12: "+state.j12].filter(function(x){return x.length>4;}).join("  ||  "),
       difficultes: state.diff
     }};
+
     var btn=this; btn.disabled=true; btn.textContent="Enregistrement…";
     var url=(window.YOLI_CONFIG||{}).WEBAPP_URL;
     function ok(){ btn.disabled=false; btn.textContent="Enregistré ✓"; setTimeout(function(){btn.textContent="Enregistrer mon avancement";},2500);
-      document.getElementById("note").textContent="Avancement transmis à "+new Date().toLocaleTimeString("fr-FR")+". Vous pouvez revenir le compléter à tout moment."; }
+      document.getElementById("note").textContent="Avancement transmis à "+new Date().toLocaleTimeString("fr-FR")+". Revenez le compléter à tout moment."; }
     if(!url){ console.log("[DÉMO] suivi payload =",payload); setTimeout(ok,500); return; }
     fetch(url,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)})
       .then(function(r){return r.json().catch(function(){return{ok:true};});})
