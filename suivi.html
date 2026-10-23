@@ -52,6 +52,15 @@
     <p class="lead">À réaliser avec <strong>au moins un autre testeur Yolicards</strong> — une personne de votre entourage déjà testeuse, ou quelqu'un que vous invitez. Pour chaque mission, indiquez où vous en êtes et, si elle est faite, le <strong>code du testeur partenaire</strong>.</p>
     <div class="callout" style="margin:8px 0 4px">Une mission n'est comptée réalisée que si vous le déclarez et renseignez le code du partenaire — pas simplement en invitant quelqu'un. Votre partenaire la déclarera aussi de son côté : c'est ce qui permet de confirmer l'interaction.</div>
     <div data-group="collect"></div>
+
+    <div id="invite-wrap" style="display:none;margin-top:14px;background:var(--ink);color:#fff;border-radius:18px;padding:16px">
+      <div style="font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px">Besoin d'un partenaire ? Invitez quelqu'un</div>
+      <p style="margin:0 0 10px;font-size:13px;color:#D9D4C8;line-height:1.5">Pas de testeur dans votre entourage ? Partagez votre lien : la personne s'inscrit et devient votre partenaire pour les missions collectives.</p>
+      <div style="display:flex;gap:8px;align-items:center;background:#2B2824;border-radius:12px;padding:8px 8px 8px 14px">
+        <input id="invlink" readonly style="flex-grow:1;background:transparent;border:0;color:#fff;font-size:12.5px;font-family:inherit;min-width:0">
+        <button id="copyinv" style="flex-shrink:0;height:40px;padding:0 14px;border:0;border-radius:10px;background:var(--gold);color:var(--ink);font-weight:700;font-family:inherit;cursor:pointer">Copier</button>
+      </div>
+    </div>
   </section>
 
   <section class="section">
@@ -165,6 +174,26 @@
     sel.addEventListener("change",function(){ (state.collect[id]=state.collect[id]||{}).statut=sel.value; refresh(); persist(); });
     pcode.addEventListener("input",function(){ (state.collect[id]=state.collect[id]||{}).partenaire=pcode.value.trim().toUpperCase(); persist(); });
   });
+
+  // ── Lien d'invitation personnel (si backend branché et code connu) ───────
+  (function(){
+    var url=(window.YOLI_CONFIG||{}).WEBAPP_URL;
+    if(!url || !urlCode) return;
+    fetch(url+"?check=monjeton&code="+encodeURIComponent(urlCode))
+      .then(function(r){return r.json();})
+      .then(function(res){
+        if(!res||!res.jeton) return;
+        var base=location.href.split("/").slice(0,-1).join("/");
+        var lien=base+"/inscription.html?inv="+encodeURIComponent(res.jeton);
+        document.getElementById("invlink").value=lien;
+        document.getElementById("invite-wrap").style.display="block";
+        document.getElementById("copyinv").addEventListener("click",function(){
+          var inp=document.getElementById("invlink"); inp.select();
+          try{navigator.clipboard.writeText(inp.value);}catch(e){document.execCommand("copy");}
+          this.textContent="Copié ✓"; var b=this; setTimeout(function(){b.textContent="Copier";},2000);
+        });
+      }).catch(function(){});
+  })();
 
   // ── Journal + difficultés ───────────────────────────────────────────────
   document.querySelector('[data-journal="j3"]').value=state.j3||"";

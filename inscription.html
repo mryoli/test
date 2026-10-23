@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Yolicards — Inscription au test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Jost:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.field{margin:0 0 14px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.field input{width:100%;height:50px;border:1.5px solid var(--line);border-radius:14px;padding:0 14px;font-size:15px;font-family:inherit;color:var(--ink);background:#fff}
+.field input:focus{outline:none;border-color:var(--gold)}
+.invite-box{background:var(--ink);color:#fff;border-radius:18px;padding:18px;margin:14px 0}
+.invite-box .lbl{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:8px}
+.invite-box .lnk{display:flex;gap:8px;align-items:center;background:#2B2824;border-radius:12px;padding:8px 8px 8px 14px}
+.invite-box .lnk input{flex-grow:1;background:transparent;border:0;color:#fff;font-size:12.5px;font-family:inherit;min-width:0}
+.invite-box .lnk button{flex-shrink:0;height:40px;padding:0 14px;border:0;border-radius:10px;background:var(--gold);color:var(--ink);font-weight:700;font-family:inherit;cursor:pointer}
+.hintp{font-size:12.5px;color:var(--muted);line-height:1.5;margin:8px 0 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div class="brand"><span class="dot"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1A1816" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path></svg></span>Yolicards · Test</div>
+    <h1>Rejoindre le test</h1>
+    <p>Programme sur invitation. Inscrivez-vous pour recevoir votre accès et démarrer vos 14 jours de test.</p>
+  </header>
+
+  <div id="app"><div class="section"><p class="lead" style="margin:0">Vérification de votre invitation…</p></div></div>
+
+  <p class="footnote">© Yolicards — Yolibrand, Abidjan.</p>
+</div>
+
+<script src="config.js"></script>
+<script>
+(function(){
+  "use strict";
+  var CFG = window.YOLI_CONFIG || {};
+  var app = document.getElementById("app");
+
+  function qs(n){ try{ return new URLSearchParams(location.search).get(n)||""; }catch(e){ return ""; } }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+  var inv = (qs("inv")||"").trim();
+  var base = location.href.split("/").slice(0,-1).join("/"); // dossier courant
+
+  if (!CFG.WEBAPP_URL) { showMsg("Le système n'est pas encore activé. Revenez un peu plus tard.", "attendre"); return; }
+  if (!inv) { showMsg("Cette inscription nécessite un lien d'invitation. Demandez le vôtre à l'équipe Yolicards ou à la personne qui vous a invité.", "stop"); return; }
+
+  // 1) vérifier le jeton
+  fetch(CFG.WEBAPP_URL + "?check=invitation&inv=" + encodeURIComponent(inv))
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (!res || !res.valide) {
+        if (res && res.raison === "complet") showMsg("Le test a atteint son nombre maximum de participants. Merci de votre intérêt !", "stop");
+        else showMsg("Cette invitation n'est pas valide ou a expiré. Demandez un lien à jour à l'équipe Yolicards.", "stop");
+        return;
+      }
+      showForm(res.places_restantes);
+    })
+    .catch(function(){ showMsg("Impossible de vérifier votre invitation pour le moment. Vérifiez votre connexion et réessayez.", "attendre"); });
+
+  function showMsg(txt, kind){
+    var color = kind==="stop" ? "#B4441F" : "#7A5B0C";
+    app.innerHTML = '<div class="section"><div class="callout" style="color:'+color+';border-color:'+color+'">'+esc(txt)+'</div></div>';
+  }
+
+  function showForm(places){
+    app.innerHTML =
+      '<div class="section">'+
+      '<h2><span class="idx">i</span>Vos informations</h2>'+
+      '<p class="lead">Encore '+places+' place(s) disponible(s).</p>'+
+      '<div class="field"><label for="nom">Nom et prénom</label><input id="nom" autocomplete="name" placeholder="Awa Koné"></div>'+
+      '<div class="field"><label for="email">E-mail</label><input id="email" type="email" autocomplete="email" placeholder="prenom@exemple.com"></div>'+
+      '<button class="btn btn-primary" id="go">M\'inscrire et démarrer</button>'+
+      '<p class="err" id="err"></p>'+
+      '<p class="hintp">Votre e-mail sert à vous envoyer le questionnaire final au bon moment. Une adresse = un seul compte testeur.</p>'+
+      '</div>';
+    document.getElementById("go").addEventListener("click", submit);
+  }
+
+  function submit(){
+    var nom = document.getElementById("nom").value.trim();
+    var email = document.getElementById("email").value.trim();
+    var err = document.getElementById("err");
+    err.classList.remove("show");
+    if (!nom){ return fail("Merci d'indiquer votre nom."); }
+    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ return fail("Merci d'indiquer un e-mail valide."); }
+    var btn = document.getElementById("go"); btn.disabled = true; btn.textContent = "Inscription…";
+
+    fetch(CFG.WEBAPP_URL, {
+      method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body: JSON.stringify({ form:"inscription", data:{ inv:inv, nom:nom, email:email } })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if (!res || res.ok === false) throw new Error((res&&res.error)||"refus serveur");
+      succes(res.code, res.jeton, email, res.deja);
+    })
+    .catch(function(e){ btn.disabled=false; btn.textContent="M'inscrire et démarrer";
+      fail("L'inscription a échoué ("+e.message+"). Réessayez."); });
+
+    function fail(m){ err.textContent=m; err.classList.add("show"); return false; }
+  }
+
+  function succes(code, jeton, email, deja){
+    var lienPre = base + "/pre-test.html?code=" + encodeURIComponent(code) + "&email=" + encodeURIComponent(email);
+    var lienInv = base + "/inscription.html?inv=" + encodeURIComponent(jeton||"");
+    app.innerHTML =
+      '<div class="done">'+
+      '<div class="check"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7A5B0C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"></path></svg></div>'+
+      '<h2>'+(deja?"Vous êtes déjà inscrit !":"Bienvenue dans le test !")+'</h2>'+
+      '<div class="code-echo">'+esc(code)+'</div>'+
+      '<p>Votre code testeur ci-dessus relie vos trois formulaires. Commencez tout de suite par le pré-test — il démarre vos 14 jours.</p>'+
+      '<a class="btn btn-primary" style="display:flex;align-items:center;justify-content:center;text-decoration:none;margin-bottom:14px" href="'+lienPre+'">Commencer le pré-test</a>'+
+      (jeton ? (
+        '<div class="invite-box">'+
+        '<div class="lbl">Votre lien d\'invitation</div>'+
+        '<div class="lnk"><input id="invlink" readonly value="'+esc(lienInv)+'"><button id="copyinv">Copier</button></div>'+
+        '<p class="hintp" style="color:#C9C3B6">Partagez-le pour inviter d\'autres testeurs : certaines missions se font à deux. Ce n\'est pas obligatoire — vous pouvez aussi tester avec des personnes déjà participantes autour de vous.</p>'+
+        '</div>'
+      ) : '') ;
+    var cp = document.getElementById("copyinv");
+    if (cp) cp.addEventListener("click", function(){
+      var inp = document.getElementById("invlink"); inp.select();
+      try { navigator.clipboard.writeText(inp.value); } catch(e){ document.execCommand("copy"); }
+      cp.textContent = "Copié ✓"; setTimeout(function(){ cp.textContent="Copier"; }, 2000);
+    });
+    window.scrollTo({top:0,behavior:"smooth"});
+  }
+})();
+</script>
+</body>
+</html>
