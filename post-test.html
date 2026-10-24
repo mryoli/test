@@ -50,7 +50,7 @@ const POSTTEST = {
     { title: "Votre expérience", questions: [
       { n:7, type:"scale", min:1, max:5, required:true, label:"Globalement, quelle est votre satisfaction ?", endLow:"Très déçu", endHigh:"Enthousiaste" },
       { n:8, type:"single", label:"Quelle fonctionnalité vous a le plus CONVAINCU ?",
-        options:["Multi-profils","YoliScan (scan de cartes papier)","Le partage par QR","Le répertoire","YoliZone","La certification","Aucune ne m'a convaincu"] },
+        options:["Multi-profils","YoliScan (scan de cartes papier et QR)","Le partage par QR / lien court","Le répertoire (recherche, filtres)","YoliZone","YoliMatch (suggestions)","La certification","L'apparence / personnalisation","Aucune ne m'a convaincu"] },
       { n:9, type:"long", label:"Qu'est-ce qui vous a le plus AGACÉ ou déçu pendant le test ? (soyez précis)" },
       { n:10, type:"long", label:"Y a-t-il eu un moment où vous avez failli abandonner ? Si oui, lequel et pourquoi ?" },
       { n:11, type:"long", label:"Qu'est-ce qui vous a semblé compliqué, pas clair, ou mal fichu dans l'application ?" },
@@ -80,6 +80,12 @@ const POSTTEST = {
       { n:24, type:"long", label:"Vos suggestions d'amélioration en vrac (tout ce qui vous passe par la tête) :" },
       { n:25, type:"single", label:"Accepteriez-vous d'être recontacté(e) pour un échange approfondi ou pour tester les prochaines versions ?",
         options:["Oui, avec plaisir","Oui, si c'est rapide","Non merci"] },
+    ]},
+    { title: "YoliMatch (suggestions de connexions)",
+      lead:"YoliMatch propose les personnes les plus pertinentes à rencontrer. Même si peu de testeurs étaient présents, votre avis sur l'idée et l'écran nous intéresse.", questions: [
+      { n:26, type:"single", label:"Avez-vous ouvert YoliMatch (onglet Découvrir) ?",
+        options:["Oui, et j'ai vu des suggestions","Oui, mais c'était vide ou presque","Non, je ne l'ai pas trouvé / ouvert"] },
+      { n:27, type:"long", label:"Que pensez-vous de l'idée de YoliMatch (être suggéré aux bonnes personnes) ? Les suggestions vous semblaient-elles pertinentes ?" },
     ]},
   ],
   doneTitle: "Merci infiniment !",

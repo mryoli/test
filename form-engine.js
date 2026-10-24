@@ -303,11 +303,19 @@
     function done(code) {
       mount.innerHTML = "";
       var d = el("div", { class: "done" });
+      var btn = "";
+      if (spec.doneLink) {
+        // lien de suite de parcours (ex. page téléchargement), avec le code en paramètre
+        var sep = spec.doneLink.indexOf("?") === -1 ? "?" : "&";
+        var href = spec.doneLink + sep + "code=" + encodeURIComponent(code);
+        btn = '<a class="btn btn-primary" style="display:flex;align-items:center;justify-content:center;text-decoration:none;margin-top:4px" href="' + href + '">' + escapeHtml(spec.doneLinkLabel || "Continuer") + '</a>';
+      }
       d.innerHTML =
         '<div class="check"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#7A5B0C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"></path></svg></div>' +
         "<h2>" + escapeHtml(spec.doneTitle || "Merci, c'est enregistré !") + "</h2>" +
         '<div class="code-echo">' + escapeHtml(code) + "</div>" +
-        "<p>" + escapeHtml(spec.doneText || "") + "</p>";
+        "<p>" + escapeHtml(spec.doneText || "") + "</p>" +
+        btn;
       mount.appendChild(d);
       window.scrollTo({ top: 0, behavior: "smooth" });
     }

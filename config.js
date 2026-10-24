@@ -8,5 +8,9 @@
 window.YOLI_CONFIG = {
   WEBAPP_URL: "https://script.google.com/macros/s/AKfycbylc1KsD-x0ydYv9A7-Vt1Ai7t_zeeR0672uddU1f60TUv6KAa-_4Ohrj7wBm3J2d9QVw/exec",
   PREMIUM_PRIX: "25 000 XOF",
-  DUREE_JOURS: 14
+  DUREE_JOURS: 14,
+  // Liens de téléchargement de l'app — à renseigner quand la distribution est prête.
+  // Tant qu'ils sont vides, la page affiche un message d'attente (sans date).
+  URL_ANDROID: "",   // ex : lien APK, ou page Play Store / test interne
+  URL_IOS: ""        // ex : lien TestFlight
 };
